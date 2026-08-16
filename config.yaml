@@ -1,0 +1,45 @@
+# ecommerce-pipeline 설정 파일
+#
+# 비밀번호/포트 등 민감한 값은 여기 두지 않고 .env 에서 관리한다.
+# 이 파일은 "경로, 임계값, 배치 옵션"처럼 코드 저장소에 같이 올려도 괜찮은
+# 값들만 다룬다. 실제 접속 정보(.env)는 docker-compose 의 env_file 로 주입된다.
+
+data_lake:
+  raw_dir: "data/raw/olist"
+  processed_dir: "data/processed"
+  curated_dir: "data/curated"
+  archive_dir: "data/archive"
+
+source_files:
+  customers: "olist_customers_dataset.csv"
+  orders: "olist_orders_dataset.csv"
+  order_items: "olist_order_items_dataset.csv"
+  payments: "olist_order_payments_dataset.csv"
+  products: "olist_products_dataset.csv"
+  sellers: "olist_sellers_dataset.csv"
+  reviews: "olist_order_reviews_dataset.csv"
+  geolocation: "olist_geolocation_dataset.csv"
+  category_translation: "product_category_name_translation.csv"
+
+validation:
+  # 이 값보다 null 비율이 높으면 파이프라인을 실패시킨다
+  max_null_ratio: 0.05
+  # 필수 컬럼이 하나라도 없으면 즉시 실패
+  fail_on_missing_columns: true
+
+spark:
+  app_name: "ecommerce_etl"
+  shuffle_partitions: 8
+  price_outlier_iqr_multiplier: 3.0
+  moving_average_window_days: 7
+
+warehouse:
+  schema: "public"
+  mart_schema: "mart"
+  load_mode: "upsert"   # append | upsert
+
+pipeline:
+  timezone: "America/Sao_Paulo"
+  default_retries: 2
+  default_retry_delay_minutes: 5
+  task_timeout_minutes: 30

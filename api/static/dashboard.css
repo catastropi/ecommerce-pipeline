@@ -1,0 +1,30 @@
+body {
+    font-family: "Segoe UI", "Noto Sans KR", -apple-system, sans-serif;
+}
+
+.navbar-brand {
+    font-weight: 600;
+    letter-spacing: 0.2px;
+}
+
+.card {
+    border: none;
+    border-radius: 0.75rem;
+}
+
+.card-header {
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+#kpi-cards h3 {
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+#topProductsTable td, #topProductsTable th {
+    font-size: 0.85rem;
+    vertical-align: middle;
+}

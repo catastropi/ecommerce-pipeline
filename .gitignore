@@ -1,0 +1,42 @@
+# =========================
+# Logs / Airflow
+# =========================
+logs/
+airflow-webserver.pid
+airflow-worker.pid
+airflow-scheduler.pid
+
+# =========================
+# Python / IDE / System
+# =========================
+__pycache__/
+*.pyc
+venv/
+.venv/
+.env
+.pytest_cache/
+.idea/
+localstack/
+
+# =========================
+# Data
+# =========================
+data/processed/*
+data/curated/*
+data/archive/*
+data/raw/*
+
+!data/processed/.gitkeep
+!data/curated/.gitkeep
+!data/archive/.gitkeep
+
+# Keep only sample raw data
+!data/raw/
+!data/raw/sample/
+!data/raw/sample/*.csv
+
+# =========================
+# Local DB
+# =========================
+*.sqlite
+*.db
