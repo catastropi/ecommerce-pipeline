@@ -27,4 +27,4 @@ jobs:
         with:
           app-name: 'ecommerce-fastapi-chris'
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: '.'
+          package:  './api'
