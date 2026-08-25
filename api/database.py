@@ -12,7 +12,7 @@ from sqlalchemy.orm import sessionmaker
 
 DATABASE_URL = os.getenv(
     "API_DB_URL",
-    "postgresql+psycopg2://chris:password@postgres:5432/ecommerce",
+    os.getenv("DATABASE_URL", "postgresql+psycopg2://chris:password@postgres:5432/ecommerce")
 )
 
 engine = create_engine(DATABASE_URL, pool_pre_ping=True, pool_size=5, max_overflow=10)
