@@ -33,7 +33,6 @@ jobs:
 
       - name: Run unit tests
         run: |
-          pip install -r requirements.txt
           pip install -r api/requirements.txt
           # test_api_ingest.py가 FastAPI TestClient로 /ingest/orders를 검증하는데
           # 필요한 패키지. api/requirements.txt에는 런타임 필수가 아니라서 안 넣음.
