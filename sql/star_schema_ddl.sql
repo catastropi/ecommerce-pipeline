@@ -57,8 +57,6 @@ CREATE TABLE IF NOT EXISTS dim_date (
 -- fact_payment : 주문 하나에 결제가 여러 건(분할 결제 등) 있을 수 있어서
 -- order_id 기준으로 fact_sales 와 조인해서 쓴다. grain이 order item이 아니라
 -- 결제 건 단위(order_id + payment_sequential)라 dim이 아니라 별도 fact로 뒀다.
--- 예전에는 dim_payment라는 이름이었는데, 결제 자체가 measure(payment_value)를
--- 가진 사건에 가까워서 이름을 fact_payment로 바꿨다.
 -- ----------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS fact_payment (
     payment_id            SERIAL PRIMARY KEY,

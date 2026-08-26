@@ -638,7 +638,7 @@
           <relation connection='postgres.1moilcw1ry0r4p125msfw06ns15s' name='fact_sales' table='[public].[fact_sales]' type='table' />
           <relation connection='postgres.1moilcw1ry0r4p125msfw06ns15s' name='dim_customer' table='[public].[dim_customer]' type='table' />
           <relation connection='postgres.1moilcw1ry0r4p125msfw06ns15s' name='dim_date' table='[public].[dim_date]' type='table' />
-          <relation connection='postgres.1moilcw1ry0r4p125msfw06ns15s' name='dim_payment' table='[public].[dim_payment]' type='table' />
+          <relation connection='postgres.1moilcw1ry0r4p125msfw06ns15s' name='fact_payment' table='[public].[fact_payment]' type='table' />
           <relation connection='postgres.1moilcw1ry0r4p125msfw06ns15s' name='dim_product' table='[public].[dim_product]' type='table' />
           <relation connection='postgres.1moilcw1ry0r4p125msfw06ns15s' name='dim_seller' table='[public].[dim_seller]' type='table' />
         </relation>
@@ -659,15 +659,15 @@
           <map key='[item_total_value]' value='[fact_sales].[item_total_value]' />
           <map key='[month]' value='[dim_date].[month]' />
           <map key='[order_date]' value='[fact_sales].[order_date]' />
-          <map key='[order_id (dim_payment)]' value='[dim_payment].[order_id]' />
+          <map key='[order_id (fact_payment)]' value='[fact_payment].[order_id]' />
           <map key='[order_id]' value='[fact_sales].[order_id]' />
           <map key='[order_item_id]' value='[fact_sales].[order_item_id]' />
           <map key='[order_status]' value='[fact_sales].[order_status]' />
-          <map key='[payment_id]' value='[dim_payment].[payment_id]' />
-          <map key='[payment_installments]' value='[dim_payment].[payment_installments]' />
-          <map key='[payment_sequential]' value='[dim_payment].[payment_sequential]' />
-          <map key='[payment_type]' value='[dim_payment].[payment_type]' />
-          <map key='[payment_value]' value='[dim_payment].[payment_value]' />
+          <map key='[payment_id]' value='[fact_payment].[payment_id]' />
+          <map key='[payment_installments]' value='[fact_payment].[payment_installments]' />
+          <map key='[payment_sequential]' value='[fact_payment].[payment_sequential]' />
+          <map key='[payment_type]' value='[fact_payment].[payment_type]' />
+          <map key='[payment_value]' value='[fact_payment].[payment_value]' />
           <map key='[price]' value='[fact_sales].[price]' />
           <map key='[product_category_name]' value='[dim_product].[product_category_name]' />
           <map key='[product_category_name_english]' value='[dim_product].[product_category_name_english]' />
@@ -1039,20 +1039,20 @@
             <remote-name>payment_id</remote-name>
             <remote-type>3</remote-type>
             <local-name>[payment_id]</local-name>
-            <parent-name>[dim_payment]</parent-name>
+            <parent-name>[fact_payment]</parent-name>
             <remote-alias>payment_id</remote-alias>
             <ordinal>28</ordinal>
             <local-type>integer</local-type>
             <aggregation>Sum</aggregation>
             <precision>10</precision>
             <contains-null>false</contains-null>
-            <object-id>[dim_payment_AD2FCE1AC6454DE387426C59C9334E37]</object-id>
+            <object-id>[fact_payment_AD2FCE1AC6454DE387426C59C9334E37]</object-id>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>order_id</remote-name>
             <remote-type>129</remote-type>
-            <local-name>[order_id (dim_payment)]</local-name>
-            <parent-name>[dim_payment]</parent-name>
+            <local-name>[order_id (fact_payment)]</local-name>
+            <parent-name>[fact_payment]</parent-name>
             <remote-alias>order_id</remote-alias>
             <ordinal>29</ordinal>
             <local-type>string</local-type>
@@ -1063,26 +1063,26 @@
             <attributes>
               <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
             </attributes>
-            <object-id>[dim_payment_AD2FCE1AC6454DE387426C59C9334E37]</object-id>
+            <object-id>[fact_payment_AD2FCE1AC6454DE387426C59C9334E37]</object-id>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>payment_sequential</remote-name>
             <remote-type>3</remote-type>
             <local-name>[payment_sequential]</local-name>
-            <parent-name>[dim_payment]</parent-name>
+            <parent-name>[fact_payment]</parent-name>
             <remote-alias>payment_sequential</remote-alias>
             <ordinal>30</ordinal>
             <local-type>integer</local-type>
             <aggregation>Sum</aggregation>
             <precision>10</precision>
             <contains-null>true</contains-null>
-            <object-id>[dim_payment_AD2FCE1AC6454DE387426C59C9334E37]</object-id>
+            <object-id>[fact_payment_AD2FCE1AC6454DE387426C59C9334E37]</object-id>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>payment_type</remote-name>
             <remote-type>129</remote-type>
             <local-name>[payment_type]</local-name>
-            <parent-name>[dim_payment]</parent-name>
+            <parent-name>[fact_payment]</parent-name>
             <remote-alias>payment_type</remote-alias>
             <ordinal>31</ordinal>
             <local-type>string</local-type>
@@ -1093,26 +1093,26 @@
             <attributes>
               <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
             </attributes>
-            <object-id>[dim_payment_AD2FCE1AC6454DE387426C59C9334E37]</object-id>
+            <object-id>[fact_payment_AD2FCE1AC6454DE387426C59C9334E37]</object-id>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>payment_installments</remote-name>
             <remote-type>3</remote-type>
             <local-name>[payment_installments]</local-name>
-            <parent-name>[dim_payment]</parent-name>
+            <parent-name>[fact_payment]</parent-name>
             <remote-alias>payment_installments</remote-alias>
             <ordinal>32</ordinal>
             <local-type>integer</local-type>
             <aggregation>Sum</aggregation>
             <precision>10</precision>
             <contains-null>true</contains-null>
-            <object-id>[dim_payment_AD2FCE1AC6454DE387426C59C9334E37]</object-id>
+            <object-id>[fact_payment_AD2FCE1AC6454DE387426C59C9334E37]</object-id>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>payment_value</remote-name>
             <remote-type>131</remote-type>
             <local-name>[payment_value]</local-name>
-            <parent-name>[dim_payment]</parent-name>
+            <parent-name>[fact_payment]</parent-name>
             <remote-alias>payment_value</remote-alias>
             <ordinal>33</ordinal>
             <local-type>real</local-type>
@@ -1120,7 +1120,7 @@
             <precision>10</precision>
             <scale>2</scale>
             <contains-null>true</contains-null>
-            <object-id>[dim_payment_AD2FCE1AC6454DE387426C59C9334E37]</object-id>
+            <object-id>[fact_payment_AD2FCE1AC6454DE387426C59C9334E37]</object-id>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>product_id</remote-name>
@@ -1322,7 +1322,7 @@
       <aliases enabled='yes' />
       <column caption='dim_customer' datatype='table' name='[__tableau_internal_object_id__].[dim_customer_79190C0FDB5B4F0484972B95C2C918F7]' role='measure' type='quantitative' />
       <column caption='dim_date' datatype='table' name='[__tableau_internal_object_id__].[dim_date_29127D938B1E470D9B1C1CD9942CC972]' role='measure' type='quantitative' />
-      <column caption='dim_payment' datatype='table' name='[__tableau_internal_object_id__].[dim_payment_AD2FCE1AC6454DE387426C59C9334E37]' role='measure' type='quantitative' />
+      <column caption='fact_payment' datatype='table' name='[__tableau_internal_object_id__].[fact_payment_AD2FCE1AC6454DE387426C59C9334E37]' role='measure' type='quantitative' />
       <column caption='dim_product' datatype='table' name='[__tableau_internal_object_id__].[dim_product_7C2273E8C1AD41FDA6CC0277C508EBC0]' role='measure' type='quantitative' />
       <column caption='dim_seller' datatype='table' name='[__tableau_internal_object_id__].[dim_seller_1C4F8F463DD74FBFA1D995C010F385E3]' role='measure' type='quantitative' />
       <column caption='fact_sales' datatype='table' name='[__tableau_internal_object_id__].[fact_sales_18E82DC091454A7D95AD61F0BFCD7F9D]' role='measure' type='quantitative' />
@@ -1342,7 +1342,7 @@
       <column caption='Item Total Value' datatype='real' name='[item_total_value]' role='measure' type='quantitative' />
       <column caption='Month' datatype='integer' name='[month]' role='dimension' type='quantitative' />
       <column caption='Order Date' datatype='date' name='[order_date]' role='dimension' type='ordinal' />
-      <column caption='Order Id (Dim Payment)' datatype='string' name='[order_id (dim_payment)]' role='dimension' type='nominal' />
+      <column caption='Order Id (Fact Payment)' datatype='string' name='[order_id (fact_payment)]' role='dimension' type='nominal' />
       <column caption='Order Id' datatype='string' name='[order_id]' role='dimension' type='nominal' />
       <column caption='Order Item Id' datatype='integer' name='[order_item_id]' role='dimension' type='ordinal' />
       <column caption='Order Status' datatype='string' name='[order_status]' role='dimension' type='nominal' />
@@ -1385,9 +1385,9 @@
               <relation connection='postgres.1moilcw1ry0r4p125msfw06ns15s' name='dim_date' table='[public].[dim_date]' type='table' />
             </properties>
           </object>
-          <object caption='dim_payment' id='dim_payment_AD2FCE1AC6454DE387426C59C9334E37'>
+          <object caption='fact_payment' id='fact_payment_AD2FCE1AC6454DE387426C59C9334E37'>
             <properties context=''>
-              <relation connection='postgres.1moilcw1ry0r4p125msfw06ns15s' name='dim_payment' table='[public].[dim_payment]' type='table' />
+              <relation connection='postgres.1moilcw1ry0r4p125msfw06ns15s' name='fact_payment' table='[public].[fact_payment]' type='table' />
             </properties>
           </object>
           <object caption='dim_product' id='dim_product_7C2273E8C1AD41FDA6CC0277C508EBC0'>
@@ -1426,10 +1426,10 @@
           <relationship>
             <expression op='='>
               <expression op='[order_id]' />
-              <expression op='[order_id (dim_payment)]' />
+              <expression op='[order_id (fact_payment)]' />
             </expression>
             <first-end-point object-id='fact_sales_18E82DC091454A7D95AD61F0BFCD7F9D' />
-            <second-end-point object-id='dim_payment_AD2FCE1AC6454DE387426C59C9334E37' />
+            <second-end-point object-id='fact_payment_AD2FCE1AC6454DE387426C59C9334E37' />
           </relationship>
           <relationship>
             <expression op='='>

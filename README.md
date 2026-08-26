@@ -92,9 +92,18 @@ erDiagram
 
 Dimension은 `dim_customer`, `dim_product`, `dim_seller`, `dim_date` 네 개고, 결제는 `fact_payment`로 별도 fact로 뒀습니다.
 
-### fact_payment (구 dim_payment)
+### fact_payment
 
-결제는 `(order_id, payment_sequential)`을 유니크 키로 갖는, 분할 결제까지 포함하는 결제 이력입니다. `fact_sales`의 grain(order item)과 맞물리지 않고 자체 measure(`payment_value`)를 가진 사건이라, 원래 `dim_payment`였던 테이블명을 `fact_payment`로 바꿨습니다. upsert 로직이나 조회 쿼리는 테이블명 하나만 바뀐 것이라 동작은 그대로입니다.
+결제는 `(order_id, payment_sequential)`을 유니크 키로 갖는 결제 이력이며,
+분할 결제를 포함해 주문 단위로 여러 결제 이벤트가 발생할 수 있습니다.
+
+`payment_value`라는 자체 measure를 가지며 `fact_sales`의 grain인
+order item과 다른 grain을 가지므로, 결제 데이터를 별도의 fact table인
+`fact_payment`으로 모델링했습니다.
+
+기존 `dim_payment` 테이블은 해당 모델링 의도에 맞게 `fact_payment`으로
+변경했으며, 이에 맞춰 DDL, ETL upsert 로직, Tableau 데이터 소스 참조도
+동일한 명칭으로 정리했습니다.
 
 ---
 

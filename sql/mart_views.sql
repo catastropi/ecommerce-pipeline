@@ -33,5 +33,5 @@ LEFT JOIN dim_seller s ON f.seller_id = s.seller_id;
 CREATE OR REPLACE VIEW mart.v_latest_kpi AS
 SELECT *
 FROM mart.kpi_snapshot
-ORDER BY computed_at DESC
+ORDER BY computed_at DESC, id DESC
 LIMIT 1;
