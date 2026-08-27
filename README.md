@@ -20,7 +20,9 @@ Kaggle의 Brazilian E-Commerce Public Dataset(Olist)을 대상으로, 데이터 
 10. [결과](#결과)
 11. [Engineering Decisions](#engineering-decisions)
 12. [Known Limitations](#known-limitations)
-13. [폴더 구조 / API / Tableau](#폴더-구조--api--tableau)
+13. [느낀 점](#느낀-점)
+14. [이 프로젝트가 도움이 될 사람](#이-프로젝트가-도움이-될-사람)
+15. [폴더 구조 / API / Tableau](#폴더-구조--api--tableau)
 
 ---
 
@@ -189,7 +191,7 @@ pytest tests -v
 | `test_spark_aggregations.py` | 윈도우 함수(Lag/Running Total), 랭크 로직 | 6 |
 | `test_spark_transformations.py` | 정제/조인/fact 조립 로직 | 6 |
 
-총 45개, 로컬 기준 전부 통과합니다. DB나 Spark 클러스터가 실제로 붙어있지 않아도 되는 테스트(SQL 생성, 검증 로직, API 스키마)는 mock으로 분리했습니다. GitHub Actions(`ci.yml`)는 flake8 lint 이후 이 중 `test_api_ingest.py`(7개, FastAPI TestClient 기반이라 DB 연결 없이 돌아감)만 실행하고, 이어서 Airflow/FastAPI 두 이미지의 Docker build를 검증합니다. 나머지 38개(Spark, DB mock 포함)는 CI에 아직 올리지 않았고 로컬에서 `pytest tests -v`로 실행합니다.
+총 45개, 로컬 기준 전부 통과합니다. DB나 Spark 클러스터가 실제로 붙어있지 않아도 되는 테스트(SQL 생성, 검증 로직, API 스키마)는 mock/monkeypatch로 분리했습니다. GitHub Actions(`ci.yml`)는 flake8 lint 이후 이 중 실제 Postgres/Spark 클러스터가 필요 없는 33개(`test_api_ingest.py`, `test_dw_loader.py`, `test_quality_check.py`, `test_data_validation.py`, `test_incremental_ingest.py`)를 실행하고, 이어서 Airflow/FastAPI 두 이미지의 Docker build를 검증합니다. 나머지 12개(`test_spark_aggregations.py`, `test_spark_transformations.py`)는 pyspark가 JVM을 띄워야 해서 CI 러너에서 실행 시간이 오래 걸려 아직 올리지 않았고, 로컬에서 `pytest tests -v`로 실행합니다. (다음 목표는 GitHub Actions에 Spark 실행 환경을 붙여서 이 12개도 CI로 옮기는 것입니다.)
 
 ---
 
@@ -270,7 +272,7 @@ Tableau 워크북(`tableau/olist_dashboard.twb`)은 월별 매출, 카테고리�
 단순 Python 스크립트를 cron으로 돌리는 대신 Airflow를 쓴 이유는 태스크 간 의존성, 재시도, 실패 알림, 실행 이력 추적이 파이프라인이 늘어날수록 스크립트 하나로는 관리가 안 되기 때문입니다. 태스크를 7단계로 쪼갠 것도 필요한 단계만 재실행할 수 있게 하려는 목적입니다.
 
 **Why PySpark?**
-pandas로도 처리 가능한 데이터 규모지만, 조인·Window Function·집계가 섞인 배치 변환 로직을 Spark 방식으로 구성하고 실행 구조를 경험해보는 것이 이 프로젝트의 목적 중 하나였습니다. Transform과 Aggregation을 별도 SparkSession/Task로 나눈 것도 Airflow 재시도 단위와 Spark 처리 단위를 맞추기 위해서입니다.
+Olist 데이터셋(주문 10만 건 규모) 자체는 pandas로도 충분히 처리 가능한 크기라는 걸 알고 시작했습니다. 그럼에도 Spark를 쓴 이유는, 실무 배치 파이프라인에서 자주 쓰이는 분산 처리 API(`Window`, `groupBy().agg()`)를 pandas가 아니라 Spark의 실행 모델 위에서 직접 짜보고 싶었기 때문입니다. 예를 들어 `build_customer_features`에서 고객별 재구매 순번을 매길 때 `Window.partitionBy("customer_unique_id").orderBy("order_purchase_timestamp")` + `row_number()`를 썼는데, 이건 pandas의 `groupby().cumcount()`로도 처리할 수 있는 로직을 Spark의 파티션 기반 Window 연산으로 다시 짜보면서 두 방식의 차이를 이해하는 게 목적이었습니다. `shuffle_partitions`은 로컬 단일 노드 환경에서는 기본값(200)이 오히려 과도하다고 판단해 `config.yaml`에서 8로 낮춰뒀습니다. Transform과 Aggregation을 별도 SparkSession/Task로 나눈 것도 Airflow 재시도 단위와 Spark 처리 단위를 맞추기 위해서입니다. 다만 지금 이 프로젝트의 목적은 "이 데이터에 Spark가 필수"라는 주장이 아니라, 분산 처리 프레임워크의 실행 모델을 배치 파이프라인 안에서 다뤄보는 데 있다는 점은 분명히 해두고 싶습니다 — 실제로 수억 건 규모였다면 파티셔닝 전략이나 셔플 튜닝을 이보다 훨씬 깊게 들어가야 했을 겁니다.
 
 **Why Star Schema?**
 단일 테이블에 모든 컬럼을 몰아넣는 이전 구조는 카테고리/판매자/고객 속성이 fact row마다 반복 저장되고, 갱신할 때마다 전체를 다시 써야 했습니다. Olist 데이터셋은 차원이 명확히 나뉘기 때문에 표준적인 Star Schema로 정리해서 분석 쿼리와 BI 연결이 쉬워지도록 했습니다.
@@ -291,6 +293,33 @@ pandas로도 처리 가능한 데이터 규모지만, 조인·Window Function·�
 - **downstream 증분 처리 미구현** — Transform/Aggregation은 현재 full-batch입니다. Parquet 파티셔닝 문제 해결이 선행 조건입니다.
 - **날짜 기준 Parquet 파티셔닝 미해결** — `partitionBy` 시도 중 재현 어려운 오류로 `coalesce(2)`로 되돌린 상태입니다. 원인을 다시 조사해야 downstream 증분 처리도 진행할 수 있습니다.
 - **Object Storage 미연동** — 지금은 로컬 파일시스템(`raw → processed → curated → archive`)만 사용하고, S3/Azure Blob 등 클라우드 오브젝트 스토리지 연동은 아직 없습니다.
+
+---
+
+## 느낀 점
+
+**"안 되는 이유"를 정확히 아는 것도 결과물이라는 것.**
+`partitionBy`로 Parquet을 날짜 기준으로 나누려다가 재현이 잘 안 되는 인코딩 오류에 부딪혔을 때, 처음에는 어떻게든 우회해서 "된다"로 만들고 싶었습니다. 하지만 원인을 못 찾은 채로 억지로 봉합하면 나중에 더 큰 문제로 돌아온다는 걸 알고, `coalesce(2)`로 되돌리고 대신 "왜 안 됐는지, 무엇까지 확인했는지"를 Known Limitations에 정확히 남기는 쪽을 택했습니다. 완성도보다 "지금 이 코드가 정확히 어디까지 하고 어디서부터 안 하는지"를 스스로 아는 게 더 중요하다는 걸 이번에 배웠습니다.
+
+**인프라는 화려할수록 좋은 게 아니라 규모에 맞아야 한다는 것.**
+Airflow를 CeleryExecutor + Redis + 별도 worker 컨테이너로 처음 구성했을 때는 "실제 운영 환경 같아 보여서" 뿌듯했습니다. 그런데 worker가 1개뿐이니 수평 확장의 이점은 하나도 없이 컨테이너 개수만 늘어나 있었습니다. LocalExecutor로 되돌리면서, 포트폴리오에서도 "더 복잡한 스택을 쓴 것"이 아니라 "지금 규모에 맞는 선택을 한 것"이 더 설득력 있는 근거가 된다는 걸 체감했습니다.
+
+**Idempotency는 나중에 붙이는 기능이 아니라 처음부터 설계에 들어가야 한다는 것.**
+같은 배치를 두 번 돌려도 중복이 안 쌓여야 한다는 요구사항을 나중에 끼워 넣으려니 upsert 대상과 truncate 대상을 다시 나누는 리팩터링이 필요했습니다. `fact_sales`/`dim_*`처럼 누적되는 테이블과 `mart.*`처럼 매번 전체 재계산되는 테이블의 성격이 다르다는 걸 처음부터 구분해뒀다면 더 깔끔했을 거라는 걸, 만들면서 뒤늦게 배웠습니다.
+
+**DB/Spark 없이도 검증 가능한 로직을 분리하면 테스트가 훨씬 쉬워진다는 것.**
+`_build_upsert_sql`처럼 "SQL 문자열을 만드는 로직"과 "그 SQL을 실제로 실행하는 부분"을 나눠두니, 실제 Postgres 컨테이너 없이도 CI에서 핵심 로직을 검증할 수 있었습니다. 반대로 이번에 CI에 실제로 올라가는 테스트가 45개 중 일부뿐이라는 걸 다시 점검하면서, "테스트를 짰다"와 "그 테스트가 실제로 매 커밋마다 돈다"는 다른 얘기라는 것도 새삼 깨달았습니다.
+
+---
+
+## 이 프로젝트가 도움이 될 사람
+
+- **Airflow + Spark + PostgreSQL로 배치 파이프라인 하나를 처음부터 끝까지 구성해보고 싶은 사람** — 데이터 검증 → Spark 정제/집계 → Star Schema 적재 → API/BI serving까지 이어지는 전체 흐름을 하나의 레포에서 참고할 수 있습니다.
+- **pandas는 써봤지만 Spark의 실행 모델(Window, lazy evaluation, shuffle)은 아직 낯선 사람** — `spark_transformations.py`/`spark_aggregations.py`에 pandas로도 할 수 있는 로직을 Spark API로 다시 짠 예시들이 있습니다.
+- **Star Schema/grain 설계를 처음 해보는 사람** — `fact_sales`와 `fact_payment`를 왜 grain이 다르다는 이유로 분리했는지, PK를 왜 복합키로 잡았는지처럼 "설계 이유"를 코드와 README에 같이 남겨뒀습니다.
+- **로컬 Docker Compose로 Airflow를 처음 띄워보는데 CeleryExecutor/LocalExecutor 중 뭘 써야 할지 고민인 사람** — 실제로 CeleryExecutor를 시도했다가 LocalExecutor로 되돌린 과정과 그 이유를 남겨뒀습니다.
+- **정적인 Kaggle 데이터셋으로 "계속 들어오는 데이터"를 다루는 것처럼 포트폴리오를 만들고 싶은 사람** — `POST /ingest/orders` API로 이벤트를 스테이징하고 다음 배치에서 병합하는 패턴을 참고할 수 있습니다. 다만 이 패턴이 ingestion 계층에만 적용되어 있고 downstream은 여전히 full-batch라는 한계는 Known Limitations에 밝혀뒀습니다.
+- **데이터 분석을 위한 정제 후 적재된 데이터가 필요한 사람** — 데이터 웨어하우스에 데이터 적재 후 tableau에 관계 설정까지 완료해 두어 데이터 분석이 필요한 사람들에게 있어 원하는 데이터들만 빠르게 모아 간편하게 시각화하는 것이 가능합니다. 
 
 ---
 
