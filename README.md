@@ -225,6 +225,8 @@ python -m scripts.spark_job
 
 ## Azure 배포 (Production)
 
+https://ecommerce-fastapi-chris.azurewebsites.net/dashboard  (웹사이트 링크. 내부 api를 이용해 볼 수 있도록 구성됨)
+
 로컬 Docker Compose는 Airflow/Spark 파이프라인과 FastAPI를 전부 포함하지만, 실제로 인터넷에 열어둔 것은 FastAPI 서빙 레이어뿐입니다. Airflow/Spark 배치는 지금은 로컬에서만 돕니다.
 
 `master` 브랜치에 push되면 `.github/workflows/cd.yml`이 `api/` 폴더만 `azure/webapps-deploy@v3`로 Azure App Service(`ecommerce-fastapi-chris`, Linux, Python 3.11)에 배포합니다. Airflow 이미지나 저장소 전체가 아니라 API 서버 코드만 올라갑니다.
@@ -258,7 +260,7 @@ Tableau 워크북(`tableau/olist_dashboard.twb`)은 월별 매출, 카테고리�
 
 ![Tableau Dashboard](./images/Tableau.png)
 
-동일한 입력으로 파이프라인을 두 차례 실행해 중복 적재가 발생하지 않는 것도 확인했습니다.
+동일한 입력으로 파이프라인을 두 차례 실행해 중복 적재가 발생하지 않는 것도 확인했습니다. (Tableau 파일의 경우 ecommerce_database 파일을 다운받으신 후 비밀번호 입력하고 들어가서 원하는 데이터 분석을 할 수 있도록 기존 예시 시트 전부 비워놓았습니다.)
 
 ---
 
@@ -317,6 +319,6 @@ ecommerce-pipeline/
 └── requirements.txt
 ```
 
-**API 주요 엔드포인트**: `/dashboard`, `/kpis`, `/sales/daily|monthly|category|region|hourly`, `/top-products`, `/sellers/ranking`, `/customers`, `/customer/{id}`, `/orders`, `POST /ingest/orders`. 전체 목록과 스키마는 `http://localhost:8000/docs`(Swagger UI)에서 직접 확인할 수 있습니다.
+**API 주요 엔드포인트**: `/dashboard`, `/kpis`, `/sales/daily|monthly|category|region|hourly`, `/top-products`, `/sellers/ranking`, `/customers`, `/customer/{id}`, `/orders`, `POST /ingest/orders`. 전체 목록과 스키마는 `http://localhost:8000/docs` (Swagger UI)에서 직접 확인할 수 있습니다.
 
-**Tableau**: [`tableau/olist_dashboard.twb`](./tableau/olist_dashboard.twb)를 다운로드하면 `fact_sales`를 소스로 만든 4개 시트를 직접 열어볼 수 있습니다. 워크북 없이 직접 대시보드를 구성하고 싶다면 `sql/mart_views.sql`의 View를 활용하면 됩니다.
+**Tableau**: [`tableau/ecommerce_database.twb`](./tableau/olist_dashboard.twb)를 다운로드하면 `fact_sales`를 소스로 만든 4개 시트를 직접 열어볼 수 있습니다. 워크북 없이 직접 대시보드를 구성하고 싶다면 `sql/mart_views.sql`의 View를 활용하면 됩니다.

@@ -1,0 +1,1100 @@
+<?xml version='1.0' encoding='utf-8' ?>
+
+<!-- build 20261.26.0410.0924                               -->
+<workbook original-version='18.1' source-build='2026.1.1 (20261.26.0410.0924)' source-platform='win' version='18.1' xmlns:user='http://www.tableausoftware.com/xml/user'>
+  <document-format-change-manifest>
+    <AnimationOnByDefault />
+    <MarkAnimation />
+    <ObjectModelEncapsulateLegacy />
+    <ObjectModelRelationshipPerfOptions />
+    <ObjectModelTableType />
+    <SchemaViewerObjectModel />
+    <SheetIdentifierTracking />
+    <WindowsPersistSimpleIdentifiers />
+  </document-format-change-manifest>
+  <preferences>
+    <preference name='ui.encoding.shelf.height' value='24' />
+    <preference name='ui.shelf.height' value='26' />
+  </preferences>
+  <datasources>
+    <datasource caption='fact_sales+(ecommerce)' inline='true' name='federated.1e4t3iv0247qd81aoc8kk0osv85e' version='18.1'>
+      <connection class='federated'>
+        <named-connections>
+          <named-connection caption='localhost' name='postgres.0vl88sv0r65xna13mhxwg125pi5x'>
+            <connection authentication='username-password' class='postgres' dbname='ecommerce' one-time-sql='' port='5432' server='localhost' username='chris' />
+          </named-connection>
+        </named-connections>
+        <relation type='collection'>
+          <relation connection='postgres.0vl88sv0r65xna13mhxwg125pi5x' name='fact_sales' table='[public].[fact_sales]' type='table' />
+          <relation connection='postgres.0vl88sv0r65xna13mhxwg125pi5x' name='dim_customer' table='[public].[dim_customer]' type='table' />
+          <relation connection='postgres.0vl88sv0r65xna13mhxwg125pi5x' name='dim_date' table='[public].[dim_date]' type='table' />
+          <relation connection='postgres.0vl88sv0r65xna13mhxwg125pi5x' name='dim_product' table='[public].[dim_product]' type='table' />
+          <relation connection='postgres.0vl88sv0r65xna13mhxwg125pi5x' name='dim_seller' table='[public].[dim_seller]' type='table' />
+          <relation connection='postgres.0vl88sv0r65xna13mhxwg125pi5x' name='fact_payment' table='[public].[fact_payment]' type='table' />
+        </relation>
+        <cols>
+          <map key='[customer_city]' value='[dim_customer].[customer_city]' />
+          <map key='[customer_id (dim_customer)]' value='[dim_customer].[customer_id]' />
+          <map key='[customer_id]' value='[fact_sales].[customer_id]' />
+          <map key='[customer_state]' value='[dim_customer].[customer_state]' />
+          <map key='[customer_unique_id]' value='[dim_customer].[customer_unique_id]' />
+          <map key='[customer_zip_code_prefix]' value='[dim_customer].[customer_zip_code_prefix]' />
+          <map key='[date_id]' value='[dim_date].[date_id]' />
+          <map key='[day]' value='[dim_date].[day]' />
+          <map key='[day_of_week]' value='[dim_date].[day_of_week]' />
+          <map key='[delivery_days]' value='[fact_sales].[delivery_days]' />
+          <map key='[freight_value]' value='[fact_sales].[freight_value]' />
+          <map key='[ingested_at]' value='[fact_sales].[ingested_at]' />
+          <map key='[is_weekend]' value='[dim_date].[is_weekend]' />
+          <map key='[item_total_value]' value='[fact_sales].[item_total_value]' />
+          <map key='[month]' value='[dim_date].[month]' />
+          <map key='[order_date]' value='[fact_sales].[order_date]' />
+          <map key='[order_id (fact_payment)]' value='[fact_payment].[order_id]' />
+          <map key='[order_id]' value='[fact_sales].[order_id]' />
+          <map key='[order_item_id]' value='[fact_sales].[order_item_id]' />
+          <map key='[order_status]' value='[fact_sales].[order_status]' />
+          <map key='[payment_id]' value='[fact_payment].[payment_id]' />
+          <map key='[payment_installments]' value='[fact_payment].[payment_installments]' />
+          <map key='[payment_sequential]' value='[fact_payment].[payment_sequential]' />
+          <map key='[payment_type]' value='[fact_payment].[payment_type]' />
+          <map key='[payment_value]' value='[fact_payment].[payment_value]' />
+          <map key='[price]' value='[fact_sales].[price]' />
+          <map key='[product_category_name]' value='[dim_product].[product_category_name]' />
+          <map key='[product_category_name_english]' value='[dim_product].[product_category_name_english]' />
+          <map key='[product_height_cm]' value='[dim_product].[product_height_cm]' />
+          <map key='[product_id (dim_product)]' value='[dim_product].[product_id]' />
+          <map key='[product_id]' value='[fact_sales].[product_id]' />
+          <map key='[product_length_cm]' value='[dim_product].[product_length_cm]' />
+          <map key='[product_weight_g]' value='[dim_product].[product_weight_g]' />
+          <map key='[product_width_cm]' value='[dim_product].[product_width_cm]' />
+          <map key='[seller_city]' value='[dim_seller].[seller_city]' />
+          <map key='[seller_id (dim_seller)]' value='[dim_seller].[seller_id]' />
+          <map key='[seller_id]' value='[fact_sales].[seller_id]' />
+          <map key='[seller_state]' value='[dim_seller].[seller_state]' />
+          <map key='[seller_zip_code_prefix]' value='[dim_seller].[seller_zip_code_prefix]' />
+          <map key='[updated_at (dim_product)]' value='[dim_product].[updated_at]' />
+          <map key='[updated_at (dim_seller)]' value='[dim_seller].[updated_at]' />
+          <map key='[updated_at]' value='[dim_customer].[updated_at]' />
+          <map key='[year]' value='[dim_date].[year]' />
+        </cols>
+        <metadata-records>
+          <metadata-record class='column'>
+            <remote-name>order_id</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[order_id]</local-name>
+            <parent-name>[fact_sales]</parent-name>
+            <remote-alias>order_id</remote-alias>
+            <ordinal>1</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>64</width>
+            <contains-null>false</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[fact_sales_F18080F707E14278B454313AEB3068D6]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>order_item_id</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[order_item_id]</local-name>
+            <parent-name>[fact_sales]</parent-name>
+            <remote-alias>order_item_id</remote-alias>
+            <ordinal>2</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
+            <contains-null>false</contains-null>
+            <object-id>[fact_sales_F18080F707E14278B454313AEB3068D6]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>customer_id</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[customer_id]</local-name>
+            <parent-name>[fact_sales]</parent-name>
+            <remote-alias>customer_id</remote-alias>
+            <ordinal>3</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>64</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[fact_sales_F18080F707E14278B454313AEB3068D6]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>product_id</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[product_id]</local-name>
+            <parent-name>[fact_sales]</parent-name>
+            <remote-alias>product_id</remote-alias>
+            <ordinal>4</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>64</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[fact_sales_F18080F707E14278B454313AEB3068D6]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>seller_id</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[seller_id]</local-name>
+            <parent-name>[fact_sales]</parent-name>
+            <remote-alias>seller_id</remote-alias>
+            <ordinal>5</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>64</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[fact_sales_F18080F707E14278B454313AEB3068D6]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>order_date</remote-name>
+            <remote-type>7</remote-type>
+            <local-name>[order_date]</local-name>
+            <parent-name>[fact_sales]</parent-name>
+            <remote-alias>order_date</remote-alias>
+            <ordinal>6</ordinal>
+            <local-type>date</local-type>
+            <aggregation>Year</aggregation>
+            <contains-null>true</contains-null>
+            <object-id>[fact_sales_F18080F707E14278B454313AEB3068D6]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>order_status</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[order_status]</local-name>
+            <parent-name>[fact_sales]</parent-name>
+            <remote-alias>order_status</remote-alias>
+            <ordinal>7</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>30</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[fact_sales_F18080F707E14278B454313AEB3068D6]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>price</remote-name>
+            <remote-type>131</remote-type>
+            <local-name>[price]</local-name>
+            <parent-name>[fact_sales]</parent-name>
+            <remote-alias>price</remote-alias>
+            <ordinal>8</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
+            <scale>2</scale>
+            <contains-null>true</contains-null>
+            <object-id>[fact_sales_F18080F707E14278B454313AEB3068D6]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>freight_value</remote-name>
+            <remote-type>131</remote-type>
+            <local-name>[freight_value]</local-name>
+            <parent-name>[fact_sales]</parent-name>
+            <remote-alias>freight_value</remote-alias>
+            <ordinal>9</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
+            <scale>2</scale>
+            <contains-null>true</contains-null>
+            <object-id>[fact_sales_F18080F707E14278B454313AEB3068D6]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>item_total_value</remote-name>
+            <remote-type>131</remote-type>
+            <local-name>[item_total_value]</local-name>
+            <parent-name>[fact_sales]</parent-name>
+            <remote-alias>item_total_value</remote-alias>
+            <ordinal>10</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
+            <scale>2</scale>
+            <contains-null>true</contains-null>
+            <object-id>[fact_sales_F18080F707E14278B454313AEB3068D6]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>delivery_days</remote-name>
+            <remote-type>131</remote-type>
+            <local-name>[delivery_days]</local-name>
+            <parent-name>[fact_sales]</parent-name>
+            <remote-alias>delivery_days</remote-alias>
+            <ordinal>11</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
+            <scale>2</scale>
+            <contains-null>true</contains-null>
+            <object-id>[fact_sales_F18080F707E14278B454313AEB3068D6]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>ingested_at</remote-name>
+            <remote-type>135</remote-type>
+            <local-name>[ingested_at]</local-name>
+            <parent-name>[fact_sales]</parent-name>
+            <remote-alias>ingested_at</remote-alias>
+            <ordinal>12</ordinal>
+            <local-type>datetime</local-type>
+            <aggregation>Year</aggregation>
+            <contains-null>true</contains-null>
+            <object-id>[fact_sales_F18080F707E14278B454313AEB3068D6]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>customer_id</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[customer_id (dim_customer)]</local-name>
+            <parent-name>[dim_customer]</parent-name>
+            <remote-alias>customer_id</remote-alias>
+            <ordinal>14</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>64</width>
+            <contains-null>false</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[dim_customer_6FB4DBF4CF604C41AB47C0562AA4BD50]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>customer_unique_id</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[customer_unique_id]</local-name>
+            <parent-name>[dim_customer]</parent-name>
+            <remote-alias>customer_unique_id</remote-alias>
+            <ordinal>15</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>64</width>
+            <contains-null>false</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[dim_customer_6FB4DBF4CF604C41AB47C0562AA4BD50]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>customer_zip_code_prefix</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[customer_zip_code_prefix]</local-name>
+            <parent-name>[dim_customer]</parent-name>
+            <remote-alias>customer_zip_code_prefix</remote-alias>
+            <ordinal>16</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
+            <contains-null>true</contains-null>
+            <object-id>[dim_customer_6FB4DBF4CF604C41AB47C0562AA4BD50]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>customer_city</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[customer_city]</local-name>
+            <parent-name>[dim_customer]</parent-name>
+            <remote-alias>customer_city</remote-alias>
+            <ordinal>17</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>100</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[dim_customer_6FB4DBF4CF604C41AB47C0562AA4BD50]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>customer_state</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[customer_state]</local-name>
+            <parent-name>[dim_customer]</parent-name>
+            <remote-alias>customer_state</remote-alias>
+            <ordinal>18</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[dim_customer_6FB4DBF4CF604C41AB47C0562AA4BD50]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>updated_at</remote-name>
+            <remote-type>135</remote-type>
+            <local-name>[updated_at]</local-name>
+            <parent-name>[dim_customer]</parent-name>
+            <remote-alias>updated_at</remote-alias>
+            <ordinal>19</ordinal>
+            <local-type>datetime</local-type>
+            <aggregation>Year</aggregation>
+            <contains-null>true</contains-null>
+            <object-id>[dim_customer_6FB4DBF4CF604C41AB47C0562AA4BD50]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>date_id</remote-name>
+            <remote-type>7</remote-type>
+            <local-name>[date_id]</local-name>
+            <parent-name>[dim_date]</parent-name>
+            <remote-alias>date_id</remote-alias>
+            <ordinal>21</ordinal>
+            <local-type>date</local-type>
+            <aggregation>Year</aggregation>
+            <contains-null>false</contains-null>
+            <object-id>[dim_date_FA1ABCD0B69C4747BA80D147AC200211]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>year</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[year]</local-name>
+            <parent-name>[dim_date]</parent-name>
+            <remote-alias>year</remote-alias>
+            <ordinal>22</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
+            <contains-null>false</contains-null>
+            <object-id>[dim_date_FA1ABCD0B69C4747BA80D147AC200211]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>month</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[month]</local-name>
+            <parent-name>[dim_date]</parent-name>
+            <remote-alias>month</remote-alias>
+            <ordinal>23</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
+            <contains-null>false</contains-null>
+            <object-id>[dim_date_FA1ABCD0B69C4747BA80D147AC200211]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>day</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[day]</local-name>
+            <parent-name>[dim_date]</parent-name>
+            <remote-alias>day</remote-alias>
+            <ordinal>24</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
+            <contains-null>false</contains-null>
+            <object-id>[dim_date_FA1ABCD0B69C4747BA80D147AC200211]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>day_of_week</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[day_of_week]</local-name>
+            <parent-name>[dim_date]</parent-name>
+            <remote-alias>day_of_week</remote-alias>
+            <ordinal>25</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
+            <contains-null>false</contains-null>
+            <object-id>[dim_date_FA1ABCD0B69C4747BA80D147AC200211]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>is_weekend</remote-name>
+            <remote-type>11</remote-type>
+            <local-name>[is_weekend]</local-name>
+            <parent-name>[dim_date]</parent-name>
+            <remote-alias>is_weekend</remote-alias>
+            <ordinal>26</ordinal>
+            <local-type>boolean</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>false</contains-null>
+            <object-id>[dim_date_FA1ABCD0B69C4747BA80D147AC200211]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>product_id</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[product_id (dim_product)]</local-name>
+            <parent-name>[dim_product]</parent-name>
+            <remote-alias>product_id</remote-alias>
+            <ordinal>28</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>64</width>
+            <contains-null>false</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[dim_product_6FD9511A932D4596B70B85604EFEEA5E]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>product_category_name</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[product_category_name]</local-name>
+            <parent-name>[dim_product]</parent-name>
+            <remote-alias>product_category_name</remote-alias>
+            <ordinal>29</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>100</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[dim_product_6FD9511A932D4596B70B85604EFEEA5E]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>product_category_name_english</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[product_category_name_english]</local-name>
+            <parent-name>[dim_product]</parent-name>
+            <remote-alias>product_category_name_english</remote-alias>
+            <ordinal>30</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>100</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[dim_product_6FD9511A932D4596B70B85604EFEEA5E]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>product_weight_g</remote-name>
+            <remote-type>131</remote-type>
+            <local-name>[product_weight_g]</local-name>
+            <parent-name>[dim_product]</parent-name>
+            <remote-alias>product_weight_g</remote-alias>
+            <ordinal>31</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
+            <scale>2</scale>
+            <contains-null>true</contains-null>
+            <object-id>[dim_product_6FD9511A932D4596B70B85604EFEEA5E]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>product_length_cm</remote-name>
+            <remote-type>131</remote-type>
+            <local-name>[product_length_cm]</local-name>
+            <parent-name>[dim_product]</parent-name>
+            <remote-alias>product_length_cm</remote-alias>
+            <ordinal>32</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
+            <scale>2</scale>
+            <contains-null>true</contains-null>
+            <object-id>[dim_product_6FD9511A932D4596B70B85604EFEEA5E]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>product_height_cm</remote-name>
+            <remote-type>131</remote-type>
+            <local-name>[product_height_cm]</local-name>
+            <parent-name>[dim_product]</parent-name>
+            <remote-alias>product_height_cm</remote-alias>
+            <ordinal>33</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
+            <scale>2</scale>
+            <contains-null>true</contains-null>
+            <object-id>[dim_product_6FD9511A932D4596B70B85604EFEEA5E]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>product_width_cm</remote-name>
+            <remote-type>131</remote-type>
+            <local-name>[product_width_cm]</local-name>
+            <parent-name>[dim_product]</parent-name>
+            <remote-alias>product_width_cm</remote-alias>
+            <ordinal>34</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
+            <scale>2</scale>
+            <contains-null>true</contains-null>
+            <object-id>[dim_product_6FD9511A932D4596B70B85604EFEEA5E]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>updated_at</remote-name>
+            <remote-type>135</remote-type>
+            <local-name>[updated_at (dim_product)]</local-name>
+            <parent-name>[dim_product]</parent-name>
+            <remote-alias>updated_at</remote-alias>
+            <ordinal>35</ordinal>
+            <local-type>datetime</local-type>
+            <aggregation>Year</aggregation>
+            <contains-null>true</contains-null>
+            <object-id>[dim_product_6FD9511A932D4596B70B85604EFEEA5E]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>seller_id</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[seller_id (dim_seller)]</local-name>
+            <parent-name>[dim_seller]</parent-name>
+            <remote-alias>seller_id</remote-alias>
+            <ordinal>37</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>64</width>
+            <contains-null>false</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[dim_seller_CC550AE0B2A946A3BC2188DBCE5F641D]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>seller_zip_code_prefix</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[seller_zip_code_prefix]</local-name>
+            <parent-name>[dim_seller]</parent-name>
+            <remote-alias>seller_zip_code_prefix</remote-alias>
+            <ordinal>38</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
+            <contains-null>true</contains-null>
+            <object-id>[dim_seller_CC550AE0B2A946A3BC2188DBCE5F641D]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>seller_city</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[seller_city]</local-name>
+            <parent-name>[dim_seller]</parent-name>
+            <remote-alias>seller_city</remote-alias>
+            <ordinal>39</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>100</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[dim_seller_CC550AE0B2A946A3BC2188DBCE5F641D]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>seller_state</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[seller_state]</local-name>
+            <parent-name>[dim_seller]</parent-name>
+            <remote-alias>seller_state</remote-alias>
+            <ordinal>40</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[dim_seller_CC550AE0B2A946A3BC2188DBCE5F641D]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>updated_at</remote-name>
+            <remote-type>135</remote-type>
+            <local-name>[updated_at (dim_seller)]</local-name>
+            <parent-name>[dim_seller]</parent-name>
+            <remote-alias>updated_at</remote-alias>
+            <ordinal>41</ordinal>
+            <local-type>datetime</local-type>
+            <aggregation>Year</aggregation>
+            <contains-null>true</contains-null>
+            <object-id>[dim_seller_CC550AE0B2A946A3BC2188DBCE5F641D]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>payment_id</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[payment_id]</local-name>
+            <parent-name>[fact_payment]</parent-name>
+            <remote-alias>payment_id</remote-alias>
+            <ordinal>43</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
+            <contains-null>false</contains-null>
+            <object-id>[fact_payment_88A8694C89664442B0F0287563EC38D3]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>order_id</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[order_id (fact_payment)]</local-name>
+            <parent-name>[fact_payment]</parent-name>
+            <remote-alias>order_id</remote-alias>
+            <ordinal>44</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>64</width>
+            <contains-null>false</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[fact_payment_88A8694C89664442B0F0287563EC38D3]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>payment_sequential</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[payment_sequential]</local-name>
+            <parent-name>[fact_payment]</parent-name>
+            <remote-alias>payment_sequential</remote-alias>
+            <ordinal>45</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
+            <contains-null>true</contains-null>
+            <object-id>[fact_payment_88A8694C89664442B0F0287563EC38D3]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>payment_type</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[payment_type]</local-name>
+            <parent-name>[fact_payment]</parent-name>
+            <remote-alias>payment_type</remote-alias>
+            <ordinal>46</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>30</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[fact_payment_88A8694C89664442B0F0287563EC38D3]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>payment_installments</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[payment_installments]</local-name>
+            <parent-name>[fact_payment]</parent-name>
+            <remote-alias>payment_installments</remote-alias>
+            <ordinal>47</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
+            <contains-null>true</contains-null>
+            <object-id>[fact_payment_88A8694C89664442B0F0287563EC38D3]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>payment_value</remote-name>
+            <remote-type>131</remote-type>
+            <local-name>[payment_value]</local-name>
+            <parent-name>[fact_payment]</parent-name>
+            <remote-alias>payment_value</remote-alias>
+            <ordinal>48</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
+            <scale>2</scale>
+            <contains-null>true</contains-null>
+            <object-id>[fact_payment_88A8694C89664442B0F0287563EC38D3]</object-id>
+          </metadata-record>
+        </metadata-records>
+      </connection>
+      <aliases enabled='yes' />
+      <column caption='dim_customer' datatype='table' name='[__tableau_internal_object_id__].[dim_customer_6FB4DBF4CF604C41AB47C0562AA4BD50]' role='measure' type='quantitative' />
+      <column caption='dim_date' datatype='table' name='[__tableau_internal_object_id__].[dim_date_FA1ABCD0B69C4747BA80D147AC200211]' role='measure' type='quantitative' />
+      <column caption='dim_product' datatype='table' name='[__tableau_internal_object_id__].[dim_product_6FD9511A932D4596B70B85604EFEEA5E]' role='measure' type='quantitative' />
+      <column caption='dim_seller' datatype='table' name='[__tableau_internal_object_id__].[dim_seller_CC550AE0B2A946A3BC2188DBCE5F641D]' role='measure' type='quantitative' />
+      <column caption='fact_payment' datatype='table' name='[__tableau_internal_object_id__].[fact_payment_88A8694C89664442B0F0287563EC38D3]' role='measure' type='quantitative' />
+      <column caption='fact_sales' datatype='table' name='[__tableau_internal_object_id__].[fact_sales_F18080F707E14278B454313AEB3068D6]' role='measure' type='quantitative' />
+      <column caption='Customer City' datatype='string' name='[customer_city]' role='dimension' semantic-role='[City].[Name]' type='nominal' />
+      <column caption='Customer Id (Dim Customer)' datatype='string' name='[customer_id (dim_customer)]' role='dimension' type='nominal' />
+      <column caption='Customer Id' datatype='string' name='[customer_id]' role='dimension' type='nominal' />
+      <column caption='Customer State' datatype='string' name='[customer_state]' role='dimension' type='nominal' />
+      <column caption='Customer Unique Id' datatype='string' name='[customer_unique_id]' role='dimension' type='nominal' />
+      <column aggregation='Sum' caption='Customer Zip Code Prefix' datatype='integer' default-format='*00000' name='[customer_zip_code_prefix]' role='dimension' semantic-role='[ZipCode].[Name]' type='ordinal' />
+      <column caption='Date Id' datatype='date' name='[date_id]' role='dimension' type='ordinal' />
+      <column caption='Day' datatype='integer' name='[day]' role='dimension' type='quantitative' />
+      <column caption='Day Of Week' datatype='integer' name='[day_of_week]' role='dimension' type='quantitative' />
+      <column caption='Delivery Days' datatype='real' name='[delivery_days]' role='measure' type='quantitative' />
+      <column caption='Freight Value' datatype='real' name='[freight_value]' role='measure' type='quantitative' />
+      <column caption='Ingested At' datatype='datetime' name='[ingested_at]' role='dimension' type='ordinal' />
+      <column caption='Is Weekend' datatype='boolean' name='[is_weekend]' role='dimension' type='nominal' />
+      <column caption='Item Total Value' datatype='real' name='[item_total_value]' role='measure' type='quantitative' />
+      <column caption='Month' datatype='integer' name='[month]' role='dimension' type='quantitative' />
+      <column caption='Order Date' datatype='date' name='[order_date]' role='dimension' type='ordinal' />
+      <column caption='Order Id (Fact Payment)' datatype='string' name='[order_id (fact_payment)]' role='dimension' type='nominal' />
+      <column caption='Order Id' datatype='string' name='[order_id]' role='dimension' type='nominal' />
+      <column caption='Order Item Id' datatype='integer' name='[order_item_id]' role='dimension' type='ordinal' />
+      <column caption='Order Status' datatype='string' name='[order_status]' role='dimension' type='nominal' />
+      <column caption='Payment Id' datatype='integer' name='[payment_id]' role='dimension' type='ordinal' />
+      <column caption='Payment Installments' datatype='integer' name='[payment_installments]' role='measure' type='quantitative' />
+      <column caption='Payment Sequential' datatype='integer' name='[payment_sequential]' role='measure' type='quantitative' />
+      <column caption='Payment Type' datatype='string' name='[payment_type]' role='dimension' type='nominal' />
+      <column caption='Payment Value' datatype='real' name='[payment_value]' role='measure' type='quantitative' />
+      <column caption='Price' datatype='real' name='[price]' role='measure' type='quantitative' />
+      <column caption='Product Category Name' datatype='string' name='[product_category_name]' role='dimension' type='nominal' />
+      <column caption='Product Category Name English' datatype='string' name='[product_category_name_english]' role='dimension' type='nominal' />
+      <column caption='Product Height Cm' datatype='real' name='[product_height_cm]' role='measure' type='quantitative' />
+      <column caption='Product Id (Dim Product)' datatype='string' name='[product_id (dim_product)]' role='dimension' type='nominal' />
+      <column caption='Product Id' datatype='string' name='[product_id]' role='dimension' type='nominal' />
+      <column caption='Product Length Cm' datatype='real' name='[product_length_cm]' role='measure' type='quantitative' />
+      <column caption='Product Weight G' datatype='real' name='[product_weight_g]' role='measure' type='quantitative' />
+      <column caption='Product Width Cm' datatype='real' name='[product_width_cm]' role='measure' type='quantitative' />
+      <column caption='Seller City' datatype='string' name='[seller_city]' role='dimension' semantic-role='[City].[Name]' type='nominal' />
+      <column caption='Seller Id (Dim Seller)' datatype='string' name='[seller_id (dim_seller)]' role='dimension' type='nominal' />
+      <column caption='Seller Id' datatype='string' name='[seller_id]' role='dimension' type='nominal' />
+      <column caption='Seller State' datatype='string' name='[seller_state]' role='dimension' type='nominal' />
+      <column aggregation='Sum' caption='Seller Zip Code Prefix' datatype='integer' default-format='*00000' name='[seller_zip_code_prefix]' role='dimension' semantic-role='[ZipCode].[Name]' type='ordinal' />
+      <column caption='Updated At (Dim Product)' datatype='datetime' name='[updated_at (dim_product)]' role='dimension' type='ordinal' />
+      <column caption='Updated At (Dim Seller)' datatype='datetime' name='[updated_at (dim_seller)]' role='dimension' type='ordinal' />
+      <column caption='Updated At' datatype='datetime' name='[updated_at]' role='dimension' type='ordinal' />
+      <column caption='Year' datatype='integer' name='[year]' role='dimension' type='quantitative' />
+      <layout dim-ordering='alphabetic' measure-ordering='alphabetic' show-structure='true' />
+      <semantic-values>
+        <semantic-value key='[Country].[Name]' value='&quot;대한민국&quot;' />
+      </semantic-values>
+      <object-graph>
+        <objects>
+          <object caption='dim_customer' id='dim_customer_6FB4DBF4CF604C41AB47C0562AA4BD50'>
+            <properties context=''>
+              <relation connection='postgres.0vl88sv0r65xna13mhxwg125pi5x' name='dim_customer' table='[public].[dim_customer]' type='table' />
+            </properties>
+          </object>
+          <object caption='dim_date' id='dim_date_FA1ABCD0B69C4747BA80D147AC200211'>
+            <properties context=''>
+              <relation connection='postgres.0vl88sv0r65xna13mhxwg125pi5x' name='dim_date' table='[public].[dim_date]' type='table' />
+            </properties>
+          </object>
+          <object caption='dim_product' id='dim_product_6FD9511A932D4596B70B85604EFEEA5E'>
+            <properties context=''>
+              <relation connection='postgres.0vl88sv0r65xna13mhxwg125pi5x' name='dim_product' table='[public].[dim_product]' type='table' />
+            </properties>
+          </object>
+          <object caption='dim_seller' id='dim_seller_CC550AE0B2A946A3BC2188DBCE5F641D'>
+            <properties context=''>
+              <relation connection='postgres.0vl88sv0r65xna13mhxwg125pi5x' name='dim_seller' table='[public].[dim_seller]' type='table' />
+            </properties>
+          </object>
+          <object caption='fact_payment' id='fact_payment_88A8694C89664442B0F0287563EC38D3'>
+            <properties context=''>
+              <relation connection='postgres.0vl88sv0r65xna13mhxwg125pi5x' name='fact_payment' table='[public].[fact_payment]' type='table' />
+            </properties>
+          </object>
+          <object caption='fact_sales' id='fact_sales_F18080F707E14278B454313AEB3068D6'>
+            <properties context=''>
+              <relation connection='postgres.0vl88sv0r65xna13mhxwg125pi5x' name='fact_sales' table='[public].[fact_sales]' type='table' />
+            </properties>
+          </object>
+        </objects>
+        <relationships>
+          <relationship>
+            <expression op='='>
+              <expression op='[customer_id]' />
+              <expression op='[customer_id (dim_customer)]' />
+            </expression>
+            <first-end-point object-id='fact_sales_F18080F707E14278B454313AEB3068D6' />
+            <second-end-point is-db-set-unique-key='true' object-id='dim_customer_6FB4DBF4CF604C41AB47C0562AA4BD50' unique-key='true' />
+          </relationship>
+          <relationship>
+            <expression op='='>
+              <expression op='[order_date]' />
+              <expression op='[date_id]' />
+            </expression>
+            <first-end-point object-id='fact_sales_F18080F707E14278B454313AEB3068D6' />
+            <second-end-point is-db-set-unique-key='true' object-id='dim_date_FA1ABCD0B69C4747BA80D147AC200211' unique-key='true' />
+          </relationship>
+          <relationship>
+            <expression op='='>
+              <expression op='[product_id]' />
+              <expression op='[product_id (dim_product)]' />
+            </expression>
+            <first-end-point object-id='fact_sales_F18080F707E14278B454313AEB3068D6' />
+            <second-end-point is-db-set-unique-key='true' object-id='dim_product_6FD9511A932D4596B70B85604EFEEA5E' unique-key='true' />
+          </relationship>
+          <relationship>
+            <expression op='='>
+              <expression op='[seller_id]' />
+              <expression op='[seller_id (dim_seller)]' />
+            </expression>
+            <first-end-point object-id='fact_sales_F18080F707E14278B454313AEB3068D6' />
+            <second-end-point is-db-set-unique-key='true' object-id='dim_seller_CC550AE0B2A946A3BC2188DBCE5F641D' unique-key='true' />
+          </relationship>
+          <relationship>
+            <expression op='='>
+              <expression op='[order_id]' />
+              <expression op='[order_id (fact_payment)]' />
+            </expression>
+            <first-end-point object-id='fact_sales_F18080F707E14278B454313AEB3068D6' />
+            <second-end-point object-id='fact_payment_88A8694C89664442B0F0287563EC38D3' />
+          </relationship>
+        </relationships>
+      </object-graph>
+    </datasource>
+    <datasource caption='ecommerce' inline='true' name='federated.14tzgsh061154t14rhli50672b4k' version='18.1'>
+      <connection class='federated'>
+        <named-connections>
+          <named-connection caption='localhost' name='postgres.1ybsliy1tuyt2s1fylb1c1bopjja'>
+            <connection authentication='username-password' class='postgres' dbname='ecommerce' one-time-sql='' port='5432' server='localhost' username='chris' />
+          </named-connection>
+        </named-connections>
+        <relation connection='postgres.1ybsliy1tuyt2s1fylb1c1bopjja' name='daily_sales' table='[mart].[daily_sales]' type='table' />
+        <metadata-records>
+          <metadata-record class='column'>
+            <remote-name>order_date</remote-name>
+            <remote-type>7</remote-type>
+            <local-name>[order_date]</local-name>
+            <parent-name>[daily_sales]</parent-name>
+            <remote-alias>order_date</remote-alias>
+            <ordinal>1</ordinal>
+            <local-type>date</local-type>
+            <aggregation>Year</aggregation>
+            <contains-null>false</contains-null>
+            <object-id>[daily_sales (mart.daily_sales)_8FE5A3C7A16E477894B71DE49F1187A2]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>total_revenue</remote-name>
+            <remote-type>131</remote-type>
+            <local-name>[total_revenue]</local-name>
+            <parent-name>[daily_sales]</parent-name>
+            <remote-alias>total_revenue</remote-alias>
+            <ordinal>2</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>14</precision>
+            <scale>2</scale>
+            <contains-null>true</contains-null>
+            <object-id>[daily_sales (mart.daily_sales)_8FE5A3C7A16E477894B71DE49F1187A2]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>order_count</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[order_count]</local-name>
+            <parent-name>[daily_sales]</parent-name>
+            <remote-alias>order_count</remote-alias>
+            <ordinal>3</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>19</precision>
+            <contains-null>true</contains-null>
+            <object-id>[daily_sales (mart.daily_sales)_8FE5A3C7A16E477894B71DE49F1187A2]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>prev_day_revenue</remote-name>
+            <remote-type>131</remote-type>
+            <local-name>[prev_day_revenue]</local-name>
+            <parent-name>[daily_sales]</parent-name>
+            <remote-alias>prev_day_revenue</remote-alias>
+            <ordinal>4</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>14</precision>
+            <scale>2</scale>
+            <contains-null>true</contains-null>
+            <object-id>[daily_sales (mart.daily_sales)_8FE5A3C7A16E477894B71DE49F1187A2]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>revenue_change_pct</remote-name>
+            <remote-type>131</remote-type>
+            <local-name>[revenue_change_pct]</local-name>
+            <parent-name>[daily_sales]</parent-name>
+            <remote-alias>revenue_change_pct</remote-alias>
+            <ordinal>5</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>8</precision>
+            <scale>2</scale>
+            <contains-null>true</contains-null>
+            <object-id>[daily_sales (mart.daily_sales)_8FE5A3C7A16E477894B71DE49F1187A2]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>running_total_revenue</remote-name>
+            <remote-type>131</remote-type>
+            <local-name>[running_total_revenue]</local-name>
+            <parent-name>[daily_sales]</parent-name>
+            <remote-alias>running_total_revenue</remote-alias>
+            <ordinal>6</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>16</precision>
+            <scale>2</scale>
+            <contains-null>true</contains-null>
+            <object-id>[daily_sales (mart.daily_sales)_8FE5A3C7A16E477894B71DE49F1187A2]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>moving_avg_revenue</remote-name>
+            <remote-type>131</remote-type>
+            <local-name>[moving_avg_revenue]</local-name>
+            <parent-name>[daily_sales]</parent-name>
+            <remote-alias>moving_avg_revenue</remote-alias>
+            <ordinal>7</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>14</precision>
+            <scale>2</scale>
+            <contains-null>true</contains-null>
+            <object-id>[daily_sales (mart.daily_sales)_8FE5A3C7A16E477894B71DE49F1187A2]</object-id>
+          </metadata-record>
+        </metadata-records>
+      </connection>
+      <aliases enabled='yes' />
+      <column caption='daily_sales' datatype='table' name='[__tableau_internal_object_id__].[daily_sales (mart.daily_sales)_8FE5A3C7A16E477894B71DE49F1187A2]' role='measure' type='quantitative' />
+      <column caption='Moving Avg Revenue' datatype='real' name='[moving_avg_revenue]' role='measure' type='quantitative' />
+      <column caption='Order Count' datatype='integer' name='[order_count]' role='measure' type='quantitative' />
+      <column caption='Order Date' datatype='date' name='[order_date]' role='dimension' type='ordinal' />
+      <column caption='Prev Day Revenue' datatype='real' name='[prev_day_revenue]' role='measure' type='quantitative' />
+      <column caption='Revenue Change Pct' datatype='real' name='[revenue_change_pct]' role='measure' type='quantitative' />
+      <column caption='Running Total Revenue' datatype='real' name='[running_total_revenue]' role='measure' type='quantitative' />
+      <column caption='Total Revenue' datatype='real' name='[total_revenue]' role='measure' type='quantitative' />
+      <layout dim-ordering='alphabetic' measure-ordering='alphabetic' show-structure='true' />
+      <semantic-values>
+        <semantic-value key='[Country].[Name]' value='&quot;대한민국&quot;' />
+      </semantic-values>
+      <object-graph>
+        <objects>
+          <object caption='daily_sales' id='daily_sales (mart.daily_sales)_8FE5A3C7A16E477894B71DE49F1187A2'>
+            <properties context=''>
+              <relation connection='postgres.1ybsliy1tuyt2s1fylb1c1bopjja' name='daily_sales' table='[mart].[daily_sales]' type='table' />
+            </properties>
+          </object>
+        </objects>
+      </object-graph>
+    </datasource>
+  </datasources>
+  <worksheets>
+    <worksheet name='시트 1'>
+      <table>
+        <view>
+          <datasources />
+          <aggregation value='true' />
+        </view>
+        <style />
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+          </pane>
+        </panes>
+        <rows />
+        <cols />
+      </table>
+      <simple-id uuid='{D37C826D-AF14-4E88-BB9F-C3B8601259DE}' />
+    </worksheet>
+    <worksheet name='시트 2'>
+      <table>
+        <view>
+          <datasources />
+          <aggregation value='true' />
+        </view>
+        <style />
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+          </pane>
+        </panes>
+        <rows />
+        <cols />
+      </table>
+      <simple-id uuid='{C0D4C6CD-DCB7-4E91-8D22-CE84CB836446}' />
+    </worksheet>
+  </worksheets>
+  <windows source-height='51'>
+    <window class='worksheet' maximized='true' name='시트 1'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+      </cards>
+      <viewpoint>
+        <highlight>
+          <color-one-way>
+            <field>[federated.1e4t3iv0247qd81aoc8kk0osv85e].[none:month:qk]</field>
+          </color-one-way>
+        </highlight>
+      </viewpoint>
+      <simple-id uuid='{C658C3EE-C27C-4AC8-BC70-381A7C0AA9B3}' />
+    </window>
+    <window class='worksheet' name='시트 2'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+      </cards>
+      <simple-id uuid='{AF523E25-BC84-438E-AED8-94FE000AC690}' />
+    </window>
+  </windows>
+  <thumbnails>
+    <thumbnail height='192' name='시트 1' width='192'>
+      iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAACXBIWXMAAA7DAAAOwwHHb6hk
+      AAACFUlEQVR4nO3TMQEAIAzAMMC/5yFjRxMFfXpnZg5Eve0A2GQA0gxAmgFIMwBpBiDNAKQZ
+      gDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFI
+      MwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQD
+      kGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBp
+      BiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA
+      0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDN
+      AKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxA
+      mgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZ
+      gDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFI
+      MwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKR9Y+0F
+      fBUOM1sAAAAASUVORK5CYII=
+    </thumbnail>
+    <thumbnail height='192' name='시트 2' width='192'>
+      iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAACXBIWXMAAA7DAAAOwwHHb6hk
+      AAACFUlEQVR4nO3TMQEAIAzAMMC/5yFjRxMFfXpnZg5Eve0A2GQA0gxAmgFIMwBpBiDNAKQZ
+      gDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFI
+      MwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQD
+      kGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBp
+      BiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA
+      0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDN
+      AKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxA
+      mgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZ
+      gDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFI
+      MwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKR9Y+0F
+      fBUOM1sAAAAASUVORK5CYII=
+    </thumbnail>
+  </thumbnails>
+</workbook>
