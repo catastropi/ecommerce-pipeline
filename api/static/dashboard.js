@@ -3,6 +3,19 @@
 
 const BRL = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
 
+// dashboard.css의 CSS 변수와 맞춘 차트 색상 팔레트. 로직과 무관한 스타일 상수.
+const PALETTE = {
+    accent: "#2c4a6e",
+    accent2: "#c97a3d",
+    accent3: "#3f6b5c",
+    accent4: "#7a5980",
+    categorySet: ["#2c4a6e", "#c97a3d", "#3f6b5c", "#7a5980", "#6b8caf", "#e0a672", "#7fa89a", "#a687ac"],
+};
+
+Chart.defaults.font.family = "'IBM Plex Sans', sans-serif";
+Chart.defaults.color = "#5b6572";
+Chart.defaults.borderColor = "#dee1e4";
+
 async function fetchJson(url) {
     const res = await fetch(url);
     if (!res.ok) {
@@ -13,12 +26,17 @@ async function fetchJson(url) {
 }
 
 async function loadKpis() {
-    const kpi = await fetchJson("/kpis");
+    const [kpi, latestDaily] = await Promise.all([
+        fetchJson("/kpis"),
+        fetchJson("/sales/daily?limit=1"),
+    ]);
     if (!kpi) return;
 
-    document.getElementById("kpi-revenue").innerText = kpi.avg_order_value
-        ? BRL.format(kpi.fact_row_count ? kpi.avg_order_value * kpi.fact_row_count : kpi.avg_order_value)
-        : "-";
+    // kpi_snapshot에는 총 매출 컬럼이 없어서, mart.daily_sales의 running_total_revenue
+    // (order_date 기준 누적 합계) 마지막 값을 총 매출로 사용한다. avg_order_value(주문 단위)와
+    // fact_row_count(order item 단위)는 grain이 달라 곱해서 쓰면 안 된다.
+    const totalRevenue = latestDaily && latestDaily.length ? latestDaily[0].running_total_revenue : null;
+    document.getElementById("kpi-revenue").innerText = totalRevenue != null ? BRL.format(totalRevenue) : "-";
     document.getElementById("kpi-aov").innerText = kpi.avg_order_value ? BRL.format(kpi.avg_order_value) : "-";
     document.getElementById("kpi-repurchase").innerText = kpi.repurchase_rate
         ? `${(kpi.repurchase_rate * 100).toFixed(1)}%`
@@ -41,15 +59,15 @@ async function loadDailySalesChart() {
                 {
                     label: "일 매출",
                     data: data.map((d) => d.total_revenue),
-                    borderColor: "#0d6efd",
-                    backgroundColor: "rgba(13,110,253,0.15)",
+                    borderColor: PALETTE.accent,
+                    backgroundColor: "rgba(44,74,110,0.12)",
                     tension: 0.25,
                     yAxisID: "y",
                 },
                 {
                     label: "7일 이동평균",
                     data: data.map((d) => d.moving_avg_revenue),
-                    borderColor: "#fd7e14",
+                    borderColor: PALETTE.accent2,
                     borderDash: [6, 4],
                     tension: 0.25,
                     yAxisID: "y",
@@ -69,7 +87,7 @@ async function loadCategoryChart() {
         type: "doughnut",
         data: {
             labels: top.map((d) => d.product_category_name_english),
-            datasets: [{ data: top.map((d) => d.total_revenue) }],
+            datasets: [{ data: top.map((d) => d.total_revenue), backgroundColor: PALETTE.categorySet }],
         },
         options: { responsive: true },
     });
@@ -83,7 +101,7 @@ async function loadRegionChart() {
         type: "bar",
         data: {
             labels: data.map((d) => d.customer_state),
-            datasets: [{ label: "매출", data: data.map((d) => d.total_revenue), backgroundColor: "#198754" }],
+            datasets: [{ label: "매출", data: data.map((d) => d.total_revenue), backgroundColor: PALETTE.accent3 }],
         },
         options: { responsive: true, indexAxis: "y" },
     });
@@ -97,7 +115,7 @@ async function loadHourlyChart() {
         type: "bar",
         data: {
             labels: data.map((d) => `${d.order_hour}시`),
-            datasets: [{ label: "주문 건수", data: data.map((d) => d.order_count), backgroundColor: "#6610f2" }],
+            datasets: [{ label: "주문 건수", data: data.map((d) => d.order_count), backgroundColor: PALETTE.accent4 }],
         },
         options: { responsive: true },
     });
@@ -114,7 +132,7 @@ async function loadTopProductsTable() {
         <tr>
             <td><code>${row.product_id}</code></td>
             <td>${row.product_category_name_english ?? "-"}</td>
-            <td class="text-end">${BRL.format(row.total_revenue)}</td>
+            <td class="num">${BRL.format(row.total_revenue)}</td>
         </tr>`
         )
         .join("");

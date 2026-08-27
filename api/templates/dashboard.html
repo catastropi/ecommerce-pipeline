@@ -4,114 +4,106 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ecommerce Data Platform Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
         rel="stylesheet"
     />
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <link rel="stylesheet" href="/static/dashboard.css" />
 </head>
-<body class="bg-light">
-<nav class="navbar navbar-dark bg-dark mb-4">
-    <div class="container-fluid">
-        <span class="navbar-brand mb-0 h1">Olist Ecommerce Data Platform</span>
-        <a class="btn btn-outline-light btn-sm" href="/docs" target="_blank">API 문서 (Swagger)</a>
+<body>
+<header class="topbar">
+    <div>
+        <span class="wordmark">Ecommerce Data Platform</span>
+        <h1>Olist Sales Dashboard</h1>
     </div>
-</nav>
+    <a class="docs-link" href="/docs" target="_blank" rel="noopener">API 문서 (Swagger)</a>
+</header>
 
-<div class="container-fluid px-4 pb-5">
+<main class="dashboard">
 
-    <!-- KPI 카드 -->
-    <div class="row g-3 mb-4" id="kpi-cards">
-        <div class="col-md-3">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h6 class="card-subtitle text-muted">총 매출</h6>
-                    <h3 id="kpi-revenue">-</h3>
-                </div>
-            </div>
+    <!-- KPI 원장(ledger) 스트립 -->
+    <div class="kpi-strip" id="kpi-cards">
+        <div class="kpi-cell">
+            <p class="kpi-label">총 매출</p>
+            <p class="kpi-value" id="kpi-revenue">-</p>
         </div>
-        <div class="col-md-3">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h6 class="card-subtitle text-muted">평균 주문금액</h6>
-                    <h3 id="kpi-aov">-</h3>
-                </div>
-            </div>
+        <div class="kpi-cell">
+            <p class="kpi-label">평균 주문금액</p>
+            <p class="kpi-value" id="kpi-aov">-</p>
         </div>
-        <div class="col-md-3">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h6 class="card-subtitle text-muted">재구매율</h6>
-                    <h3 id="kpi-repurchase">-</h3>
-                </div>
-            </div>
+        <div class="kpi-cell">
+            <p class="kpi-label">재구매율</p>
+            <p class="kpi-value" id="kpi-repurchase">-</p>
         </div>
-        <div class="col-md-3">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h6 class="card-subtitle text-muted">평균 배송일 / 환불률</h6>
-                    <h3 id="kpi-delivery">-</h3>
-                </div>
-            </div>
+        <div class="kpi-cell">
+            <p class="kpi-label">평균 배송일 / 환불률</p>
+            <p class="kpi-value" id="kpi-delivery">-</p>
         </div>
     </div>
 
-    <div class="row g-3 mb-4">
-        <div class="col-md-8">
-            <div class="card shadow-sm">
-                <div class="card-header">일별 매출 추이 (누적 매출 / 이동평균 포함)</div>
-                <div class="card-body">
-                    <canvas id="dailySalesChart" height="90"></canvas>
-                </div>
+    <div class="panel-grid cols-2">
+        <div class="panel">
+            <div class="panel-header">
+                <h2 class="panel-title">일별 매출 추이 (누적 매출 / 이동평균 포함)</h2>
+                <span class="panel-grain">DAY · ITEM SUM</span>
+            </div>
+            <div class="panel-body">
+                <canvas id="dailySalesChart" height="90"></canvas>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card shadow-sm">
-                <div class="card-header">카테고리별 매출</div>
-                <div class="card-body">
-                    <canvas id="categoryChart" height="90"></canvas>
-                </div>
+        <div class="panel">
+            <div class="panel-header">
+                <h2 class="panel-title">카테고리별 매출</h2>
+                <span class="panel-grain">TOP 8</span>
+            </div>
+            <div class="panel-body">
+                <canvas id="categoryChart" height="90"></canvas>
             </div>
         </div>
     </div>
 
-    <div class="row g-3 mb-4">
-        <div class="col-md-4">
-            <div class="card shadow-sm">
-                <div class="card-header">지역별 매출</div>
-                <div class="card-body">
-                    <canvas id="regionChart" height="110"></canvas>
-                </div>
+    <div class="panel-grid cols-3">
+        <div class="panel">
+            <div class="panel-header">
+                <h2 class="panel-title">지역별 매출</h2>
+                <span class="panel-grain">STATE</span>
+            </div>
+            <div class="panel-body">
+                <canvas id="regionChart" height="110"></canvas>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card shadow-sm">
-                <div class="card-header">시간대별 주문 건수</div>
-                <div class="card-body">
-                    <canvas id="hourlyChart" height="110"></canvas>
-                </div>
+        <div class="panel">
+            <div class="panel-header">
+                <h2 class="panel-title">시간대별 주문 건수</h2>
+                <span class="panel-grain">HOUR · ORDER COUNT</span>
+            </div>
+            <div class="panel-body">
+                <canvas id="hourlyChart" height="110"></canvas>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card shadow-sm">
-                <div class="card-header">Top 상품 (매출 기준)</div>
-                <div class="card-body p-0">
-                    <table class="table table-sm mb-0" id="topProductsTable">
-                        <thead>
-                        <tr>
-                            <th>상품 ID</th>
-                            <th>카테고리</th>
-                            <th class="text-end">매출</th>
-                        </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
+        <div class="panel">
+            <div class="panel-header">
+                <h2 class="panel-title">Top 상품 (매출 기준)</h2>
+                <span class="panel-grain">TOP 10</span>
+            </div>
+            <div class="panel-body flush">
+                <table class="data-table" id="topProductsTable">
+                    <thead>
+                    <tr>
+                        <th>상품 ID</th>
+                        <th>카테고리</th>
+                        <th class="num">매출</th>
+                    </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
             </div>
         </div>
     </div>
-</div>
+</main>
 
 <script src="/static/dashboard.js"></script>
 </body>
