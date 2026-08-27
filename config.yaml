@@ -39,7 +39,6 @@ warehouse:
   load_mode: "upsert"   # append | upsert
 
 pipeline:
-  timezone: "America/Sao_Paulo"
   default_retries: 2
   default_retry_delay_minutes: 5
   task_timeout_minutes: 30

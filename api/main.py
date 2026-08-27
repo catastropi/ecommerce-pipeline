@@ -1,7 +1,7 @@
 """
 이커머스 데이터 웨어하우스를 조회하는 FastAPI 서버.
 
-FastAPI + Jinja2 + Bootstrap + Chart.js 조합으로 대시보드를 구성했다.
+FastAPI + Jinja2 + Chart.js 조합으로 대시보드를 구성했다.
 /dashboard는 사람이 보는 화면이고, 나머지 엔드포인트는 그 화면이
 fetch()로 불러다 쓰는 JSON API인 동시에 Swagger(/docs)로도 노출된다.
 """

@@ -62,14 +62,12 @@ def _archive_previous_batch(keep_last_n=5):
     logger.info("이전 배치 curated/marts 를 archive로 백업: %s", archive_target)
 
     try:
-        # ARCHIVE_DATA_PATH 내 'marts_'로 시작하는 디렉토리만 필터링 후 이름순(시간순) 정렬
         archived_dirs = sorted([
             os.path.join(ARCHIVE_DATA_PATH, d)
             for d in os.listdir(ARCHIVE_DATA_PATH)
             if d.startswith("marts_") and os.path.isdir(os.path.join(ARCHIVE_DATA_PATH, d))
         ])
 
-        # 보관할 개수(keep_last_n)보다 많으면 가장 오래된 폴더부터 삭제
         if len(archived_dirs) > keep_last_n:
             dirs_to_delete = archived_dirs[:-keep_last_n]
             for old_dir in dirs_to_delete:

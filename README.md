@@ -15,11 +15,12 @@ Kaggle의 Brazilian E-Commerce Public Dataset(Olist)을 대상으로, 데이터 
 5. [Engineering Highlights](#engineering-highlights)
 6. [Tech Stack](#tech-stack)
 7. [Testing & CI](#testing--ci)
-8. [실행 방법](#실행-방법)
-9. [결과](#결과)
-10. [Engineering Decisions](#engineering-decisions)
-11. [Known Limitations](#known-limitations)
-12. [폴더 구조 / API / Tableau](#폴더-구조--api--tableau)
+8. [실행 방법 (Local)](#실행-방법-local)
+9. [Azure 배포 (Production)](#azure-배포-production)
+10. [결과](#결과)
+11. [Engineering Decisions](#engineering-decisions)
+12. [Known Limitations](#known-limitations)
+13. [폴더 구조 / API / Tableau](#폴더-구조--api--tableau)
 
 ---
 
@@ -99,11 +100,8 @@ Dimension은 `dim_customer`, `dim_product`, `dim_seller`, `dim_date` 네 개고,
 
 `payment_value`라는 자체 measure를 가지며 `fact_sales`의 grain인
 order item과 다른 grain을 가지므로, 결제 데이터를 별도의 fact table인
-`fact_payment`으로 모델링했습니다.
-
-기존 `dim_payment` 테이블은 해당 모델링 의도에 맞게 `fact_payment`으로
-변경했으며, 이에 맞춰 DDL, ETL upsert 로직, Tableau 데이터 소스 참조도
-동일한 명칭으로 정리했습니다.
+`fact_payment`으로 모델링했습니다. DDL, ETL upsert 로직, Tableau
+데이터 소스 참조 모두 `fact_payment` 기준으로 일치시켰습니다.
 
 ---
 
@@ -191,11 +189,11 @@ pytest tests -v
 | `test_spark_aggregations.py` | 윈도우 함수(Lag/Running Total), 랭크 로직 | 6 |
 | `test_spark_transformations.py` | 정제/조인/fact 조립 로직 | 6 |
 
-총 45개, 로컬 기준 전부 통과합니다. DB나 Spark 클러스터가 실제로 붙어있지 않아도 되는 테스트(SQL 생성, 검증 로직, API 스키마)는 mock으로 분리했고, GitHub Actions에서는 flake8 lint → pytest → Docker build 순으로 실행됩니다.
+총 45개, 로컬 기준 전부 통과합니다. DB나 Spark 클러스터가 실제로 붙어있지 않아도 되는 테스트(SQL 생성, 검증 로직, API 스키마)는 mock으로 분리했습니다. GitHub Actions(`ci.yml`)는 flake8 lint 이후 이 중 `test_api_ingest.py`(7개, FastAPI TestClient 기반이라 DB 연결 없이 돌아감)만 실행하고, 이어서 Airflow/FastAPI 두 이미지의 Docker build를 검증합니다. 나머지 38개(Spark, DB mock 포함)는 CI에 아직 올리지 않았고 로컬에서 `pytest tests -v`로 실행합니다.
 
 ---
 
-## 실행 방법
+## 실행 방법 (Local)
 
 ```bash
 git clone <repository-url>
@@ -222,6 +220,27 @@ cd dags
 python -m scripts.data_validation
 python -m scripts.spark_job
 ```
+
+---
+
+## Azure 배포 (Production)
+
+로컬 Docker Compose는 Airflow/Spark 파이프라인과 FastAPI를 전부 포함하지만, 실제로 인터넷에 열어둔 것은 FastAPI 서빙 레이어뿐입니다. Airflow/Spark 배치는 지금은 로컬에서만 돕니다.
+
+`master` 브랜치에 push되면 `.github/workflows/cd.yml`이 `api/` 폴더만 `azure/webapps-deploy@v3`로 Azure App Service(`ecommerce-fastapi-chris`, Linux, Python 3.11)에 배포합니다. Airflow 이미지나 저장소 전체가 아니라 API 서버 코드만 올라갑니다.
+
+App Service의 `API_DB_URL`(또는 `DATABASE_URL`) 환경변수는 로컬 Docker의 `postgres:13` 컨테이너가 아니라 별도의 Azure Database for PostgreSQL(`ecommerce-pg-20260815`, PostgreSQL 16.14) 인스턴스를 가리킵니다. `api/database.py`가 이 값을 읽어 커넥션을 맺는 구조는 로컬/운영이 동일하고, 어느 DB에 붙을지만 환경변수로 갈립니다.
+
+```text
+Local           Docker Compose
+                 └── PostgreSQL 13 (postgres 컨테이너)
+
+Production       GitHub Actions (push to master)
+                     └── Azure App Service (ecommerce-fastapi-chris)
+                             └── Azure Database for PostgreSQL (ecommerce-pg-20260815)
+```
+
+Terraform이나 Bicep 같은 IaC는 레포에 없고, App Service/PostgreSQL 리소스 프로비저닝은 코드로 관리하지 않습니다. 실제 접속 정보는 App Service 환경변수로만 넣어뒀고 레포에는 값 없이 변수 이름만 남겨둡니다.
 
 ---
 
@@ -290,7 +309,8 @@ ecommerce-pipeline/
 ├── sql/                # star_schema_ddl.sql, mart_views.sql
 ├── tableau/olist_dashboard.twb
 ├── tests/               # 45개 테스트
-├── .github/workflows/ci.yml
+├── .github/workflows/ci.yml, cd.yml
+├── images/              # README에 쓰인 스크린샷
 ├── config.yaml
 ├── .env.example
 ├── docker-compose.yml
